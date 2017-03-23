@@ -1,6 +1,7 @@
 import React from 'react';
 
 import SignIn from './SignIn';
+import Annotations from './Annotations';
 
 require('./Expanded.css');
 
@@ -8,6 +9,7 @@ export default class Expanded extends React.Component {
   static propTypes = {
     expanded: React.PropTypes.bool.isRequired,
     signedIn: React.PropTypes.bool.isRequired,
+    droneDeployApi: React.PropTypes.object.isRequired,
     onSignedOut: React.PropTypes.func.isRequired
   }
 
@@ -36,7 +38,7 @@ export default class Expanded extends React.Component {
       if (this.state.signedIn) {
         return (
           <div className="row">
-            <h3>You Are Signed In.</h3>
+            <Annotations droneDeployApi={this.props.droneDeployApi} />
             <button onClick={this.props.onSignedOut}>Sign Out</button>
           </div>
         );

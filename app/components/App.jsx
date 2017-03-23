@@ -20,8 +20,15 @@ export default class App extends React.Component {
 
     this.state = {
       expanded: false,
-      signedIn: false
+      signedIn: false,
+      droneDeployApi: null
     };
+
+    /*eslint-disable */
+    dronedeploy.onload(() => {
+      this.state.droneDeployApi = dronedeploy;
+    });
+    /*eslint-enable */
 
     this.checkSignedInState();
   }
@@ -54,7 +61,7 @@ export default class App extends React.Component {
         if (error) {
           this.api = null;
         } else {
-          const forms = response.forms.map(function (formObj) {
+          const forms = response.forms.map((formObj) => {
             return new Form(formObj);
           });
 
@@ -74,6 +81,7 @@ export default class App extends React.Component {
         <Expanded
           expanded={this.state.expanded}
           signedIn={this.state.signedIn}
+          droneDeployApi={this.state.droneDeployApi}
           onSignedIn={this.onSignedIn}
           onSignedOut={this.onSignedOut}
         />
