@@ -25,9 +25,11 @@ export default class App extends React.Component {
     };
 
     /*eslint-disable */
-    dronedeploy.onload(() => {
-      this.state.droneDeployApi = dronedeploy;
-    });
+    if (window.dronedeploy) {
+      dronedeploy.onload(() => {
+        this.state.droneDeployApi = dronedeploy;
+      });
+    }
     /*eslint-enable */
 
     this.checkSignedInState();

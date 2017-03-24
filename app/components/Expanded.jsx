@@ -13,33 +13,17 @@ export default class Expanded extends React.Component {
     onSignedOut: React.PropTypes.func.isRequired
   }
 
-  static defaultProps = {
-    expanded: false
-  }
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      expanded: props.expanded,
-      signedIn: props.signedIn
-    };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      expanded: nextProps.expanded,
-      signedIn: nextProps.signedIn
-    });
-  }
-
   render() {
-    if (this.state.expanded) {
-      if (this.state.signedIn) {
+    if (this.props.expanded) {
+      if (this.props.signedIn) {
         return (
-          <div className="row">
-            <Annotations droneDeployApi={this.props.droneDeployApi} />
-            <button onClick={this.props.onSignedOut}>Sign Out</button>
+          <div>
+            <div className="row">
+              <Annotations droneDeployApi={this.props.droneDeployApi} />
+            </div>
+            <div className="row">
+              <button className="sign-out-button" onClick={this.props.onSignedOut}>Sign Out of Fulcrum</button>
+            </div>
           </div>
         );
       } else {

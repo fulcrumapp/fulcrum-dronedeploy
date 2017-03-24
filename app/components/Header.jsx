@@ -8,26 +8,8 @@ export default class Header extends React.Component {
     onHeaderClick: React.PropTypes.func.isRequired
   }
 
-  static defaultProps = {
-    expanded: false
-  }
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      expanded: props.expanded
-    };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      expanded: nextProps.expanded
-    });
-  }
-
   render() {
-    const upOrDown = this.state.expanded ? 'up' : 'down';
+    const upOrDown = this.props.expanded ? 'up' : 'down';
     const arrowUrl = `https://s3.amazonaws.com/drone-deploy-plugins/templates/login-example-imgs/arrow-${upOrDown}.svg`;
 
     return (

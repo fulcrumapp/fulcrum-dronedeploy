@@ -14,6 +14,10 @@ export default class Annotations extends React.Component {
       annotations: []
     };
 
+    if (!this.props.droneDeployApi) {
+      return;
+    }
+
     this.props.droneDeployApi.Plans.getCurrentlyViewed()
       .then((plan) => {
         return this.props.droneDeployApi.Annotations.get(plan.id, { comments: true });
@@ -33,7 +37,7 @@ export default class Annotations extends React.Component {
   }
 
   render() {
-    if (this.state.annotations) {
+    if (this.state.annotations && this.state.annotations.length > 0) {
       return (
         <div>
           {this.state.annotations.map((annotation) => {
