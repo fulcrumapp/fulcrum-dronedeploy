@@ -11,5 +11,5 @@ npm start
 ## Building
 
 ```bash
-npm run deploy
+npm run build
 ```
