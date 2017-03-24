@@ -1,12 +1,12 @@
 {
-  "name": "react-babel-webpack-boilerplate",
-  "version": "1.4.1",
-  "description": "A boilerplate for React-Babel-Webpack project",
+  "name": "fulcrum-drone-deploy",
+  "version": "0.0.0",
+  "description": "A Fulcrum - DroneDeploy Integration",
   "main": "app/main.jsx",
   "scripts": {
     "precommit": "npm run lint",
     "commitmsg": "npm run lint:msg",
-    "lint": "eslint --cache --ignore-path .gitignore --ext .jsx,.js --format=node_modules/eslint-formatter-pretty .",
+    "lint": "node_modules/.bin/eslint 'app/**/*.jsx'",
     "lint:msg": "validate-commit-msg",
     "test": "npm run lint",
     "build": "webpack",
@@ -39,19 +39,17 @@
     "css-loader": "~0.26.1",
     "cz-conventional-changelog": "^1.2.0",
     "eslint": "latest",
-    "eslint-config-airbnb": "latest",
-    "eslint-formatter-pretty": "^1.1.0",
-    "eslint-plugin-compat": "^1.0.0",
-    "eslint-plugin-import": "latest",
-    "eslint-plugin-jsx-a11y": "3.x",
-    "eslint-plugin-promise": "^3.4.0",
-    "eslint-plugin-react": "latest",
+    "eslint-config-fulcrum": "^1.5.4",
+    "eslint-plugin-babel": "^4.1.1",
     "husky": "^0.12.0",
     "open-browser-webpack-plugin": "0.0.3",
     "style-loader": "~0.13.1",
     "validate-commit-msg": "2.x",
     "webpack": "1.x",
     "webpack-dev-server": "1.x"
+  },
+  "eslintConfig": {
+    "extends": "fulcrum"
   },
   "keywords": [
     "es6",

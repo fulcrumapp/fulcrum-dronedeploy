@@ -40,11 +40,11 @@ export default class Annotations extends React.Component {
     if (this.state.annotations && this.state.annotations.length > 0) {
       return (
         <div>
-          {this.state.annotations.map((annotation) => {
-            return <p>{annotation.description}</p>;
+          {this.state.annotations.map((annotation, i) => {
+            return <p key={i}>{annotation.description}</p>;
           })}
         </div>
-      )
+      );
     }
     return (
       <p>No annotations.</p>

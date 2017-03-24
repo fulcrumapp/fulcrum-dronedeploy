@@ -2,49 +2,22 @@ import React from 'react';
 import request from 'superagent';
 
 import { server } from '../constants';
+import Context from './Context';
 
 require('./SignIn.css');
-
-class Context extends React.Component {
-  static propTypes = {
-    id: React.PropTypes.string.isRequired,
-    name: React.PropTypes.string.isRequired,
-    onContextChosen: React.PropTypes.func.isRequired
-  }
-
-  constructor() {
-    super();
-
-    this.onClick = this.onClick.bind(this);
-  }
-
-  onClick() {
-    this.props.onContextChosen(this.props.id);
-  }
-
-  render() {
-    return (
-      <div className="row button-row">
-        <button onClick={this.onClick} key={this.props.id}>{this.props.name}</button>
-      </div>
-    );
-  }
-}
 
 export default class SignIn extends React.Component {
   static propTypes = {
     onSignedIn: React.PropTypes.func.isRequired
   }
 
-  TIMEOUT = 3600;
-
   constructor() {
     super();
 
-    this.onEmailChange = this.onEmailChange.bind(this);
-    this.onPasswordChange = this.onPasswordChange.bind(this);
-    this.onFormSubmit = this.onFormSubmit.bind(this);
-    this.onContextChosen = this.onContextChosen.bind(this);
+    this.handleEmailChange = this.handleEmailChange.bind(this);
+    this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.handleFormSubmit = this.handleFormSubmit.bind(this);
+    this.handleContextChosen = this.handleContextChosen.bind(this);
 
     this.state = {
       email: '',
@@ -53,7 +26,57 @@ export default class SignIn extends React.Component {
     };
   }
 
-  onContextChosen(id) {
+  render() {
+    if (this.state.contexts) {
+      return (
+        <div>
+          {this.state.contexts.map((context) => {
+            return (<Context
+              key={context.id}
+              id={context.id}
+              name={context.name}
+              onContextChosen={this.handleContextChosen} />
+            );
+          })}
+        </div>
+      );
+    }
+    return (
+      <form onSubmit={this.handleFormSubmit}>
+        <div className="row">
+          <div className="input-field col-4">
+            <input
+              onChange={this.handleEmailChange}
+              type="text"
+              className="validate"
+              name="email"
+              id="email"
+              autoFocus="true" />
+            <label htmlFor="email">Email</label>
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="input-field col-4">
+            <input
+              onChange={this.handlePasswordChange}
+              type="password"
+              className="validate"
+              id="password" />
+            <label htmlFor="password">Password</label>
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col-4">
+            <button type="submit">Sign Into Fulcrum</button>
+          </div>
+        </div>
+      </form>
+    );
+  }
+
+  handleContextChosen(id) {
     const data = {
       authorization: {
         organization_id: id,
@@ -69,14 +92,16 @@ export default class SignIn extends React.Component {
       .set('Authorization', this.getAuthHeader())
       .end((error, resp) => {
         if (error) {
+          /*eslint-disable */
           window.alert('There was a problem signing in.');
+          /*eslint-enable */
         } else {
           this.props.onSignedIn(resp.body.authorization.token);
         }
       });
   }
 
-  onFormSubmit(event) {
+  handleFormSubmit(event) {
     const email = this.state.email;
     const password = this.state.password;
 
@@ -87,7 +112,9 @@ export default class SignIn extends React.Component {
         .set('Authorization', this.getAuthHeader())
         .end((error, resp) => {
           if (error) {
+            /*eslint-disable */
             window.alert('There was a problem signing in.');
+            /*eslint-enable */
           } else {
             this.setState({ contexts: resp.body.user.contexts });
           }
@@ -97,11 +124,11 @@ export default class SignIn extends React.Component {
     event.preventDefault();
   }
 
-  onEmailChange(event) {
+  handleEmailChange(event) {
     this.setState({ email: event.target.value.trim() });
   }
 
-  onPasswordChange(event) {
+  handlePasswordChange(event) {
     this.setState({ password: event.target.value.trim() });
   }
 
@@ -113,44 +140,5 @@ export default class SignIn extends React.Component {
     return `Basic ${auth}`;
   }
 
-  render() {
-    if (this.state.contexts) {
-      return (
-        <div>
-          {this.state.contexts.map((context) => {
-            return <Context
-              key={context.id}
-              id={context.id}
-              name={context.name}
-              onContextChosen={this.onContextChosen}
-            />;
-          })}
-        </div>
-      );
-    } else {
-      return (
-        <form onSubmit={this.onFormSubmit}>
-          <div className="row">
-            <div className="input-field col-4">
-              <input onChange={this.onEmailChange} type="text" className="validate" name="email" id="email" autoFocus="true" />
-              <label htmlFor="email">Email</label>
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="input-field col-4">
-              <input onChange={this.onPasswordChange} type="password" className="validate" id="password" />
-              <label htmlFor="password">Password</label>
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="col-4">
-              <button type="submit">Sign Into Fulcrum</button>
-            </div>
-          </div>
-        </form>
-      );
-    }
-  }
+  TIMEOUT = 3600;
 }

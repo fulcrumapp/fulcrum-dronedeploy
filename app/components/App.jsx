@@ -9,14 +9,12 @@ import Expanded from './Expanded';
 require('./App.css');
 
 export default class App extends React.Component {
-  TOKEN_KEY = 'fulcrum_token';
-
   constructor() {
     super();
 
-    this.onHeaderClick = this.onHeaderClick.bind(this);
-    this.onSignedIn = this.onSignedIn.bind(this);
-    this.onSignedOut = this.onSignedOut.bind(this);
+    this.handleHeaderClick = this.handleHeaderClick.bind(this);
+    this.handleSignedIn = this.handleSignedIn.bind(this);
+    this.handleSignedOut = this.handleSignedOut.bind(this);
 
     this.state = {
       expanded: false,
@@ -35,23 +33,24 @@ export default class App extends React.Component {
     this.checkSignedInState();
   }
 
-  onHeaderClick() {
-    this.setState({ expanded: !this.state.expanded });
-  }
-
-  onSignedIn(token) {
-    sessionStorage.setItem(this.TOKEN_KEY, token);
-    this.setState({ signedIn: true });
-    this.checkSignedInState();
-  }
-
-  onSignedOut() {
-    sessionStorage.removeItem(this.TOKEN_KEY);
-    this.setState({ signedIn: false });
+  render() {
+    return (
+      <div className="container expand-container">
+        <Header
+          expanded={this.state.expanded}
+          onHeaderClick={this.handleHeaderClick} />
+        <Expanded
+          expanded={this.state.expanded}
+          signedIn={this.state.signedIn}
+          droneDeployApi={this.state.droneDeployApi}
+          onSignedIn={this.handleSignedIn}
+          onSignedOut={this.handleSignedOut} />
+      </div>
+    );
   }
 
   checkSignedInState() {
-    const token = sessionStorage.getItem(this.TOKEN_KEY);
+    const token = window.sessionStorage.getItem(this.TOKEN_KEY);
 
     if (token) {
       this.api = new Fulcrum({
@@ -73,21 +72,20 @@ export default class App extends React.Component {
     }
   }
 
-  render() {
-    return (
-      <div className="container expand-container">
-        <Header
-          expanded={this.state.expanded}
-          onHeaderClick={this.onHeaderClick}
-        />
-        <Expanded
-          expanded={this.state.expanded}
-          signedIn={this.state.signedIn}
-          droneDeployApi={this.state.droneDeployApi}
-          onSignedIn={this.onSignedIn}
-          onSignedOut={this.onSignedOut}
-        />
-      </div>
-    );
+  handleHeaderClick() {
+    this.setState({ expanded: !this.state.expanded });
   }
+
+  handleSignedIn(token) {
+    window.sessionStorage.setItem(this.TOKEN_KEY, token);
+    this.setState({ signedIn: true });
+    this.checkSignedInState();
+  }
+
+  handleSignedOut() {
+    window.sessionStorage.removeItem(this.TOKEN_KEY);
+    this.setState({ signedIn: false });
+  }
+
+  TOKEN_KEY = 'fulcrum_token';
 }
