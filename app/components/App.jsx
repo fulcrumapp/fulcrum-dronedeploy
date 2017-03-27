@@ -44,7 +44,8 @@ export default class App extends React.Component {
           signedIn={this.state.signedIn}
           droneDeployApi={this.state.droneDeployApi}
           onSignedIn={this.handleSignedIn}
-          onSignedOut={this.handleSignedOut} />
+          onSignedOut={this.handleSignedOut}
+          forms={this.state.forms} />
       </div>
     );
   }

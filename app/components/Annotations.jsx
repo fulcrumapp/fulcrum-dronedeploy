@@ -4,16 +4,59 @@ require('./Expanded.css');
 
 export default class Annotations extends React.Component {
   static propTypes = {
-    droneDeployApi: React.PropTypes.object.isRequired
+    droneDeployApi: React.PropTypes.object.isRequired,
+    forms: React.PropTypes.array.isRequired
   }
 
   constructor(props) {
     super(props);
 
+    this.handleRefreshCountClicked = this.handleRefreshCountClicked.bind(this);
+    this.handleSyncButtonClicked = this.handleSyncButtonClicked.bind(this);
+
     this.state = {
       annotations: []
     };
+  }
 
+  render() {
+    const refreshCount = (
+      <button onClick={this.handleRefreshCountClicked}>
+        Refresh Count
+      </button>
+    );
+
+    const count = this.state.annotations.length;
+
+    let syncButton = null;
+
+    if (count > 0) {
+      syncButton = (
+        <button onClick={this.handleSyncButtonClicked}>
+          Sync Annotations
+        </button>
+      );
+    }
+
+    return (
+      <p>
+        There {count === 1 ? 'is' : 'are'} <strong>{count} annotation{count === 1 ? '' : 's'}</strong> available to push to Fulcrum.
+        {refreshCount}
+        {syncButton}
+      </p>
+    );
+  }
+
+  handleRefreshCountClicked() {
+    this.checkAnnotations();
+  }
+
+  handleSyncButtonClicked() {
+    console.log('sync');
+    console.log(this.props.forms);
+  }
+
+  checkAnnotations() {
     if (!this.props.droneDeployApi) {
       return;
     }
@@ -34,20 +77,5 @@ export default class Annotations extends React.Component {
       .catch((error) => {
         console.log('error: ', error);
       });
-  }
-
-  render() {
-    if (this.state.annotations && this.state.annotations.length > 0) {
-      return (
-        <div>
-          {this.state.annotations.map((annotation, i) => {
-            return <p key={i}>{annotation.description}</p>;
-          })}
-        </div>
-      );
-    }
-    return (
-      <p>No annotations.</p>
-    );
   }
 }

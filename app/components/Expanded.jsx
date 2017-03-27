@@ -11,7 +11,8 @@ export default class Expanded extends React.Component {
     signedIn: React.PropTypes.bool.isRequired,
     droneDeployApi: React.PropTypes.object.isRequired,
     onSignedIn: React.PropTypes.func.isRequired,
-    onSignedOut: React.PropTypes.func.isRequired
+    onSignedOut: React.PropTypes.func.isRequired,
+    forms: React.PropTypes.array.isRequired
   }
 
   render() {
@@ -20,7 +21,9 @@ export default class Expanded extends React.Component {
         return (
           <div>
             <div className="row">
-              <Annotations droneDeployApi={this.props.droneDeployApi} />
+              <Annotations
+                droneDeployApi={this.props.droneDeployApi}
+                forms={this.props.forms} />
             </div>
             <div className="row">
               <button

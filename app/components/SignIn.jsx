@@ -140,5 +140,5 @@ export default class SignIn extends React.Component {
     return `Basic ${auth}`;
   }
 
-  TIMEOUT = 3600;
+  TIMEOUT = 60 * 60 * 24;
 }
