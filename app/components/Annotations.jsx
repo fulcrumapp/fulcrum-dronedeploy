@@ -39,11 +39,19 @@ export default class Annotations extends React.Component {
     }
 
     return (
-      <p>
-        There {count === 1 ? 'is' : 'are'} <strong>{count} annotation{count === 1 ? '' : 's'}</strong> available to push to Fulcrum.
-        {refreshCount}
-        {syncButton}
-      </p>
+      <div>
+        <div className="row">
+          <p>
+            There {count === 1 ? 'is' : 'are'} <strong>{count} annotation{count === 1 ? '' : 's'}</strong> available to push to Fulcrum.
+          </p>
+        </div>
+        <div className="row">
+          {refreshCount}
+        </div>
+        <div className="row">
+          {syncButton}
+        </div>
+      </div>
     );
   }
 

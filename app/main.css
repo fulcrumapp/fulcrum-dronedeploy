@@ -193,7 +193,7 @@ p,span {
 }
 
 /* TODO: Buttons */
-button {
+button, a.button {
   font-size: 0.875rem;
   width:100%;
   outline:0;
@@ -221,31 +221,31 @@ button {
   color: #2196F3;
 }*/
 
-button.secondary {
+button.secondary, a.button.secondary {
   background-color: transparent;
   border: 1px solid rgba(0,0,0,.32);
   color: rgba(0,0,0,.54);
 }
 
-button.danger {
+button.danger, a.button.danger {
   background-color: transparent;
   border: 1px solid #ff4081;
   color: #ff4081;
 }
 
-button:hover.primary {
+button:hover.primary, a.button:hover.primary {
   background-color: rgba(33, 150, 243, 0.05);
 }
 
-button:hover.secondary {
+button:hover.secondary, a.button:hover.secodary {
   background-color: rgba(0, 0, 0, 0.05);
 }
 
-button:hover.danger {
+button:hover.danger, a.button:hover.danger {
 background-color: rgba(255, 64, 129, 0.05);
 }
 
-button:disabled {
+button:disabled, a.button.disabled {
   border: 1px solid rgba(0, 0, 0, 0.2);
   color: rgba(0, 0, 0, 0.2);
 }

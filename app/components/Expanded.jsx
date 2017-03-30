@@ -1,43 +1,47 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-import SignIn from './SignIn';
-import Annotations from './Annotations';
+import { urlRoot } from '../constants';
 
 require('./Expanded.css');
 
 export default class Expanded extends React.Component {
   static propTypes = {
-    expanded: React.PropTypes.bool.isRequired,
-    signedIn: React.PropTypes.bool.isRequired,
-    droneDeployApi: React.PropTypes.object.isRequired,
-    onSignedIn: React.PropTypes.func.isRequired,
-    onSignedOut: React.PropTypes.func.isRequired,
-    forms: React.PropTypes.array.isRequired
+    signedIn: React.PropTypes.bool.isRequired
   }
 
   render() {
-    if (this.props.expanded) {
-      if (this.props.signedIn) {
-        return (
-          <div>
-            <div className="row">
-              <Annotations
-                droneDeployApi={this.props.droneDeployApi}
-                forms={this.props.forms} />
-            </div>
-            <div className="row">
-              <button
-                className="sign-out-button"
-                onClick={this.props.onSignedOut}>Sign Out of Fulcrum</button>
-            </div>
-          </div>
-        );
-      }
+    const signInPath = `${urlRoot}sign-in`;
+
+    if (this.props.signedIn) {
       return (
-        <SignIn onSignedIn={this.props.onSignedIn} />
+        <div>
+          <div className="row">
+            <Link
+              className="button"
+              to="/annotations">
+              Annotations
+            </Link>
+          </div>
+          <div className="row">
+            <Link
+              className="button"
+              to="/sign-out">
+              Sign Out
+            </Link>
+          </div>
+        </div>
       );
     }
 
-    return null;
+    return (
+      <div className="row">
+        <Link
+          className="button"
+          to={signInPath}>
+          Sign In
+        </Link>
+      </div>
+    );
   }
 }

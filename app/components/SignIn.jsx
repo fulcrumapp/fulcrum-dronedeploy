@@ -1,14 +1,16 @@
 import React from 'react';
 import request from 'superagent';
+import { Redirect } from 'react-router-dom';
 
-import { server } from '../constants';
+import { server, urlRoot } from '../constants';
 import Context from './Context';
 
 require('./SignIn.css');
 
 export default class SignIn extends React.Component {
   static propTypes = {
-    onSignedIn: React.PropTypes.func.isRequired
+    onSignedIn: React.PropTypes.func.isRequired,
+    signedIn: React.PropTypes.bool.isRequired
   }
 
   constructor() {
@@ -27,6 +29,11 @@ export default class SignIn extends React.Component {
   }
 
   render() {
+    if (this.props.signedIn) {
+      return (
+        <Redirect to={urlRoot + 'expanded'} />
+      );
+    }
     if (this.state.contexts) {
       return (
         <div>
@@ -97,6 +104,7 @@ export default class SignIn extends React.Component {
           /*eslint-enable */
         } else {
           this.props.onSignedIn(resp.body.authorization.token);
+          this.render();
         }
       });
   }
