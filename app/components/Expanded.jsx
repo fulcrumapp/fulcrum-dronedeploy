@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { urlRoot } from '../constants';
-
 require('./Expanded.css');
 
 export default class Expanded extends React.Component {
@@ -11,8 +9,6 @@ export default class Expanded extends React.Component {
   }
 
   render() {
-    const signInPath = `${urlRoot}sign-in`;
-
     if (this.props.signedIn) {
       return (
         <div>
@@ -38,7 +34,7 @@ export default class Expanded extends React.Component {
       <div className="row">
         <Link
           className="button"
-          to={signInPath}>
+          to="/sign-in">
           Sign In
         </Link>
       </div>

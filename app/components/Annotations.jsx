@@ -1,8 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
-import { urlRoot } from '../constants';
-
 require('./Expanded.css');
 
 export default class Annotations extends React.Component {
@@ -24,7 +22,7 @@ export default class Annotations extends React.Component {
 
   render() {
     if (this.state.syncClicked) {
-      const redirectTo = `${urlRoot}form-picker`;
+      const redirectTo = '/form-picker';
       return (
         <Redirect to={redirectTo} />
       );

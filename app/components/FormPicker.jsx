@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { rootUrl } from '../constants';
-
 require('./FormPicker.css');
 
 export default class FormPicker extends React.Component {
@@ -38,6 +36,6 @@ export default class FormPicker extends React.Component {
 
   handleFormClicked(form) {
     this.props.onFormPicked(form);
-    this.props.history.push(`${rootUrl}field-picker`);
+    this.props.history.push('/field-picker');
   }
 }

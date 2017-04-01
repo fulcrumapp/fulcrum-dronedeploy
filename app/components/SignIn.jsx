@@ -2,7 +2,7 @@ import React from 'react';
 import request from 'superagent';
 import { Redirect } from 'react-router-dom';
 
-import { server, urlRoot } from '../constants';
+import { server } from '../constants';
 import Context from './Context';
 
 require('./SignIn.css');
@@ -31,7 +31,7 @@ export default class SignIn extends React.Component {
   render() {
     if (this.props.signedIn) {
       return (
-        <Redirect to={urlRoot + 'expanded'} />
+        <Redirect to={'expanded'} />
       );
     }
     if (this.state.contexts) {

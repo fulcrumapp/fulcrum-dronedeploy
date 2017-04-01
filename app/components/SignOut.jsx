@@ -1,8 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
-import { urlRoot } from '../constants';
-
 require('./SignOut.css');
 
 export default class SignOut extends React.Component {
@@ -16,7 +14,7 @@ export default class SignOut extends React.Component {
 
   render() {
     return (
-      <Redirect to={urlRoot + 'expanded'} />
+      <Redirect to="/expanded" />
     );
   }
 }

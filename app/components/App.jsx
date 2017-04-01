@@ -27,15 +27,12 @@ export default class App extends React.Component {
     this.handleSignedOut = this.handleSignedOut.bind(this);
     this.handleFormPicked = this.handleFormPicked.bind(this);
 
-    this.signInPath = '*sign-in*';
-    this.signOutPath = '*sign-out*';
-    this.annotationsPath = '*annotations*';
-    this.formPickerPath = '*form-picker';
-    this.fieldPickerPath = '*field-picker*';
-    this.expandedPath = '*expanded*';
-
-    this.expandedPathTo = `${urlRoot}expanded`;
-    this.fieldPickerPathTo = `${urlRoot}field-picker`;
+    this.signInPath = '/sign-in';
+    this.signOutPath = '/sign-out';
+    this.annotationsPath = '/annotations';
+    this.formPickerPath = '/form-picker';
+    this.fieldPickerPath = '/field-picker';
+    this.expandedPath = '/expanded';
 
     this.history = createHistory();
 
@@ -62,7 +59,9 @@ export default class App extends React.Component {
     });
 
     return (
-      <Router history={this.history}>
+      <Router
+        history={this.history}
+        basename={urlRoot}>
         <div className="container expand-container">
           <Header
             expanded={this.state.expanded}
@@ -104,7 +103,7 @@ export default class App extends React.Component {
               signedIn={this.state.signedIn}
               droneDeployApi={this.state.droneDeployApi}
               forms={this.state.forms} />
-            <Redirect to={this.expandedPathTo} />
+            <Redirect to={'/expanded'} />
           </div>
         </div>
       </Router>
