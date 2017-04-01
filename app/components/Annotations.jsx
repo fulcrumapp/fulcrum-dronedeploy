@@ -1,11 +1,13 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
+
+import { urlRoot } from '../constants';
 
 require('./Expanded.css');
 
 export default class Annotations extends React.Component {
   static propTypes = {
-    droneDeployApi: React.PropTypes.object.isRequired,
-    forms: React.PropTypes.array.isRequired
+    droneDeployApi: React.PropTypes.object.isRequired
   }
 
   constructor(props) {
@@ -15,11 +17,19 @@ export default class Annotations extends React.Component {
     this.handleSyncButtonClicked = this.handleSyncButtonClicked.bind(this);
 
     this.state = {
-      annotations: []
+      annotations: [],
+      syncClicked: false
     };
   }
 
   render() {
+    if (this.state.syncClicked) {
+      const redirectTo = `${urlRoot}form-picker`;
+      return (
+        <Redirect to={redirectTo} />
+      );
+    }
+
     const refreshCount = (
       <button onClick={this.handleRefreshCountClicked}>
         Refresh Count
@@ -60,8 +70,7 @@ export default class Annotations extends React.Component {
   }
 
   handleSyncButtonClicked() {
-    console.log('sync');
-    console.log(this.props.forms);
+    this.setState({ syncClicked: true });
   }
 
   checkAnnotations() {

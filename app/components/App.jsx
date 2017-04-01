@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Redirect } from 'react-router-dom';
+import createHistory from 'history/createBrowserHistory';
 import Fulcrum from 'fulcrum-app';
 import { Form } from 'fulcrum-core';
 import classnames from 'classnames';
@@ -10,6 +11,8 @@ import Expanded from './Expanded';
 import SignIn from './SignIn';
 import SignOut from './SignOut';
 import Annotations from './Annotations';
+import FormPicker from './FormPicker';
+import FieldPicker from './FieldPicker';
 import PropsRoute from './PropsRoute';
 import PrivateRoute from './PrivateRoute';
 
@@ -22,13 +25,19 @@ export default class App extends React.Component {
     this.handleHeaderClick = this.handleHeaderClick.bind(this);
     this.handleSignedIn = this.handleSignedIn.bind(this);
     this.handleSignedOut = this.handleSignedOut.bind(this);
+    this.handleFormPicked = this.handleFormPicked.bind(this);
 
     this.signInPath = '*sign-in*';
     this.signOutPath = '*sign-out*';
     this.annotationsPath = '*annotations*';
+    this.formPickerPath = '*form-picker';
+    this.fieldPickerPath = '*field-picker*';
     this.expandedPath = '*expanded*';
 
     this.expandedPathTo = `${urlRoot}expanded`;
+    this.fieldPickerPathTo = `${urlRoot}field-picker`;
+
+    this.history = createHistory();
 
     this.state = {
       expanded: false,
@@ -53,7 +62,7 @@ export default class App extends React.Component {
     });
 
     return (
-      <Router>
+      <Router history={this.history}>
         <div className="container expand-container">
           <Header
             expanded={this.state.expanded}
@@ -75,8 +84,22 @@ export default class App extends React.Component {
               signedIn={this.state.signedIn}
               droneDeployApi={this.state.droneDeployApi}
               forms={this.state.forms} />
+            <PrivateRoute
+              path={this.formPickerPath}
+              component={FormPicker}
+              redirectTo={this.signInPath}
+              signedIn={this.state.signedIn}
+              forms={this.state.forms}
+              onFormPicked={this.handleFormPicked} />
+            <PrivateRoute
+              path={this.fieldPickerPath}
+              component={FieldPicker}
+              redirectTo={this.signInPath}
+              signedIn={this.state.signedIn}
+              selectedForm={this.state.selectedForm}
+              onFieldPicked={this.handleFieldPicked} />
             <PropsRoute
-              path="*expanded*"
+              path={this.expandedPath}
               component={Expanded}
               signedIn={this.state.signedIn}
               droneDeployApi={this.state.droneDeployApi}
@@ -124,6 +147,15 @@ export default class App extends React.Component {
   handleSignedOut() {
     window.sessionStorage.removeItem(this.TOKEN_KEY);
     this.setState({ signedIn: false });
+  }
+
+  handleFormPicked(form) {
+    this.setState({ selectedForm: form });
+  }
+
+  handleFieldPicked(field) {
+    console.log('fieldPicked');
+    console.log(field);
   }
 
   TOKEN_KEY = 'fulcrum_token';

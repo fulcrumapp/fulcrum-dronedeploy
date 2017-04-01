@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { rootUrl } from '../constants';
+
 require('./FormPicker.css');
 
 export default class FormPicker extends React.Component {
@@ -17,19 +19,25 @@ export default class FormPicker extends React.Component {
   render() {
     return (
       <div>
-        {this.props.forms.map((form, i) => {
-          return (
-            <button key={i}
-              onClick={this.handleFormClicked}>
-              form.name
-            </button>
-          );
-        })}
+        <div className="row">
+          <p>Select a form to import annotations.</p>
+        </div>
+        <div className="row">
+          {this.props.forms.map((form, i) => {
+            return (
+              <button key={i}
+                onClick={() => this.handleFormClicked(form)}>
+                {form.name}
+              </button>
+            );
+          })}
+        </div>
       </div>
     );
   }
 
-  handleFormClicked() {
-    this.props.onFormPicked('blah');
+  handleFormClicked(form) {
+    this.props.onFormPicked(form);
+    this.props.history.push(`${rootUrl}field-picker`);
   }
 }
