@@ -14,9 +14,15 @@ export default class FieldPicker extends React.Component {
   }
 
   render() {
-    const writableFields = this.props.selectedForm.flattenElements(false).filter((field) => {
-      return field.isTextElement;
-    });
+    const writableFields = this.props.selectedForm.flattenElements(false).filter((field) => field.isTextElement);
+
+    if (writableFields.length === 0) {
+      return (
+        <div className="row">
+          <p>There are no text fields to write to in this app.</p>
+        </div>
+      );
+    }
 
     return (
       <div>
