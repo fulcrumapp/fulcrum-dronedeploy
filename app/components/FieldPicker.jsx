@@ -14,13 +14,17 @@ export default class FieldPicker extends React.Component {
   }
 
   render() {
+    const writableFields = this.props.selectedForm.flattenElements(false).filter((field) => {
+      return field.isTextElement;
+    });
+
     return (
       <div>
         <div className="row">
           <p>Select a field for annotation comments.</p>
         </div>
         <div className="row">
-          {this.props.selectedForm.elements.map((field, i) => {
+          {writableFields.map((field, i) => {
             return (
               <button key={i}
                 onClick={() => this.handleFieldClicked(field)}>
