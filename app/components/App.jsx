@@ -27,13 +27,6 @@ export default class App extends React.Component {
     this.handleSignedOut = this.handleSignedOut.bind(this);
     this.handleFormPicked = this.handleFormPicked.bind(this);
 
-    this.signInPath = '/sign-in';
-    this.signOutPath = '/sign-out';
-    this.annotationsPath = '/annotations';
-    this.formPickerPath = '/form-picker';
-    this.fieldPickerPath = '/field-picker';
-    this.expandedPath = '/expanded';
-
     this.history = createHistory();
 
     this.state = {
@@ -68,42 +61,42 @@ export default class App extends React.Component {
             onHeaderClick={this.handleHeaderClick} />
           <div className={expandedClassName}>
             <PropsRoute
-              path={this.signInPath}
+              path="/sign-in"
               component={SignIn}
               onSignedIn={this.handleSignedIn}
               signedIn={this.state.signedIn} />
             <PropsRoute
-              path={this.signOutPath}
+              path="/sign-out"
               component={SignOut}
               onSignedOut={this.handleSignedOut} />
             <PrivateRoute
-              path={this.annotationsPath}
+              path="/annotations"
               component={Annotations}
-              redirectTo={this.signInPath}
+              redirectTo="/sign-in"
               signedIn={this.state.signedIn}
               droneDeployApi={this.state.droneDeployApi}
               forms={this.state.forms} />
             <PrivateRoute
-              path={this.formPickerPath}
+              path="/form-picker"
               component={FormPicker}
-              redirectTo={this.signInPath}
+              redirectTo="/sign-in"
               signedIn={this.state.signedIn}
               forms={this.state.forms}
               onFormPicked={this.handleFormPicked} />
             <PrivateRoute
-              path={this.fieldPickerPath}
+              path="/field-picker"
               component={FieldPicker}
-              redirectTo={this.signInPath}
+              redirectTo="/sign-in"
               signedIn={this.state.signedIn}
               selectedForm={this.state.selectedForm}
               onFieldPicked={this.handleFieldPicked} />
             <PropsRoute
-              path={this.expandedPath}
+              path="/expanded"
               component={Expanded}
               signedIn={this.state.signedIn}
               droneDeployApi={this.state.droneDeployApi}
               forms={this.state.forms} />
-            <Redirect to={'/expanded'} />
+            <Redirect to="/expanded" />
           </div>
         </div>
       </Router>

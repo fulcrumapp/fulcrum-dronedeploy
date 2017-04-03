@@ -22,9 +22,8 @@ export default class Annotations extends React.Component {
 
   render() {
     if (this.state.syncClicked) {
-      const redirectTo = '/form-picker';
       return (
-        <Redirect to={redirectTo} />
+        <Redirect to="/form-picker" />
       );
     }
 
