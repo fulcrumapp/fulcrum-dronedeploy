@@ -1,0 +1,17 @@
+.navigation {
+  margin-top: 15px;
+}
+
+.navigation hr {
+  color: rgba(0, 0, 0, 0.12);
+  height: 1px;
+  border: none;
+	background-color: rgba(0, 0, 0, 0.12);
+  margin-bottom: 12px;
+}
+
+.navigation a.back {
+  font-size: 0.9em;
+  background-color: white;
+  margin-top: 0;
+}

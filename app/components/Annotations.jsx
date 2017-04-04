@@ -1,6 +1,8 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
+import Navigation from './Navigation';
+
 require('./Expanded.css');
 
 export default class Annotations extends React.Component {
@@ -58,6 +60,7 @@ export default class Annotations extends React.Component {
         <div className="row">
           {syncButton}
         </div>
+        <Navigation />
       </div>
     );
   }

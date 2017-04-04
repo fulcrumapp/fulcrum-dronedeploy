@@ -1,6 +1,8 @@
 import React from 'react';
 import { Form } from 'fulcrum-core';
 
+import Navigation from './Navigation';
+
 export default class FieldPicker extends React.Component {
   static propTypes = {
     selectedForm: React.PropTypes.instanceOf(Form),
@@ -39,6 +41,7 @@ export default class FieldPicker extends React.Component {
             );
           })}
         </div>
+        <Navigation />
       </div>
     );
   }

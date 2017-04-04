@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Navigation from './Navigation';
+
 require('./FormPicker.css');
 
 export default class FormPicker extends React.Component {
@@ -30,6 +32,7 @@ export default class FormPicker extends React.Component {
             );
           })}
         </div>
+        <Navigation />
       </div>
     );
   }
