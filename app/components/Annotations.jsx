@@ -1,5 +1,4 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
 
 import Navigation from './Navigation';
 
@@ -18,20 +17,13 @@ export default class Annotations extends React.Component {
     this.handleSyncButtonClicked = this.handleSyncButtonClicked.bind(this);
 
     this.state = {
-      annotations: [],
-      syncClicked: false
+      annotations: []
     };
 
     this.checkAnnotations();
   }
 
   render() {
-    if (this.state.syncClicked) {
-      return (
-        <Redirect to="/form-picker" />
-      );
-    }
-
     const refreshCount = (
       <button onClick={this.handleRefreshCountClicked}>
         Refresh Count
@@ -73,7 +65,7 @@ export default class Annotations extends React.Component {
   }
 
   handleSyncButtonClicked() {
-    this.setState({ syncClicked: true });
+    this.props.history.push('/form-picker')
   }
 
   checkAnnotations() {
