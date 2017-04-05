@@ -62,7 +62,7 @@ export default class AnnotationsSyncer extends React.Component {
     this.props.onAnnotationsSyncd(error, results);
 
     if (!error) {
-      // this.props.history.push('/expanded');
+      this.props.history.push('/expanded');
     }
   }
 }
