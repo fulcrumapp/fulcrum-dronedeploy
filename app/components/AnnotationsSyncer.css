@@ -1,0 +1,11 @@
+.syncing {
+  margin: 20px 0;
+  padding: 15px 0;
+  background-color: #e0e0e0;
+  border: 1px solid #999;
+  border-radius: 3px;
+}
+
+.syncing p {
+  margin: 0 auto;
+}

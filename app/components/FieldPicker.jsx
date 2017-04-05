@@ -48,5 +48,6 @@ export default class FieldPicker extends React.Component {
 
   handleFieldClicked(field) {
     this.props.onFieldPicked(field);
+    this.props.history.push('/annotations-syncer');
   }
 }

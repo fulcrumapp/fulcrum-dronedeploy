@@ -2,9 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Redirect } from 'react-router-dom';
 import createHistory from 'history/createBrowserHistory';
 import Fulcrum from 'fulcrum-app';
-import { Form, Record } from 'fulcrum-core';
+import { Form } from 'fulcrum-core';
 import classnames from 'classnames';
-import series from 'async/series';
 
 import { server, urlRoot } from '../constants';
 import Header from './Header';
@@ -12,6 +11,7 @@ import Expanded from './Expanded';
 import SignIn from './SignIn';
 import SignOut from './SignOut';
 import Annotations from './Annotations';
+import AnnotationsSyncer from './AnnotationsSyncer';
 import FormPicker from './FormPicker';
 import FieldPicker from './FieldPicker';
 import PropsRoute from './PropsRoute';
@@ -29,7 +29,7 @@ export default class App extends React.Component {
     this.handleFormPicked = this.handleFormPicked.bind(this);
     this.handleFieldPicked = this.handleFieldPicked.bind(this);
     this.handleAnnotationsUpdated = this.handleAnnotationsUpdated.bind(this);
-    this.onAnnotationsSyncd = this.onAnnotationsSyncd.bind(this);
+    this.handleAnnotationsSyncd = this.handleAnnotationsSyncd.bind(this);
 
     this.history = createHistory();
 
@@ -98,6 +98,16 @@ export default class App extends React.Component {
               signedIn={this.state.signedIn}
               selectedForm={this.state.selectedForm}
               onFieldPicked={this.handleFieldPicked} />
+            <PrivateRoute
+              path="/annotations-syncer"
+              component={AnnotationsSyncer}
+              redirectTo="/sign-in"
+              signedIn={this.state.signedIn}
+              annotations={this.state.annotations}
+              selectedForm={this.state.selectedForm}
+              selectedField={this.state.selectedField}
+              fulcrumAPI={this.api}
+              onAnnotationsSyncd={this.handleAnnotationsSyncd} />
             <PropsRoute
               path="/expanded"
               component={Expanded}
@@ -158,38 +168,10 @@ export default class App extends React.Component {
   }
 
   handleFieldPicked(selectedField) {
-    this.setState({selectedField}, () => {
-      this.syncAnnotations();
-    });
+    this.setState({selectedField});
   }
 
-  syncAnnotation(annotation, callback) {
-    const attributes = {
-      latitude: annotation.geometry.lat,
-      longitude: annotation.geometry.lng,
-      form_values: {}
-    };
-
-    attributes.form_values[this.state.selectedField.key] = annotation.description;
-
-    const record = new Record(attributes, this.state.selectedForm);
-
-    const recordObject = {record: record.toJSON()};
-
-    this.api.records.create(recordObject, callback);
-  }
-
-  syncAnnotations() {
-    const tasks = this.state.annotations.map((annotation) => {
-      return (callback) => {
-        this.syncAnnotation(annotation, callback);
-      };
-    });
-
-    series(tasks, this.onAnnotationsSyncd);
-  }
-
-  onAnnotationsSyncd(error, results) {
+  handleAnnotationsSyncd(error, results) {
     if (error) {
       console.log('sync error');
       console.log(error);
