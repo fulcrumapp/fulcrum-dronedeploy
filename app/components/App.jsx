@@ -2,8 +2,9 @@ import React from 'react';
 import { BrowserRouter as Router, Redirect } from 'react-router-dom';
 import createHistory from 'history/createBrowserHistory';
 import Fulcrum from 'fulcrum-app';
-import { Form } from 'fulcrum-core';
+import { Form, Record } from 'fulcrum-core';
 import classnames from 'classnames';
+import series from 'async/series';
 
 import { server, urlRoot } from '../constants';
 import Header from './Header';
@@ -26,13 +27,18 @@ export default class App extends React.Component {
     this.handleSignedIn = this.handleSignedIn.bind(this);
     this.handleSignedOut = this.handleSignedOut.bind(this);
     this.handleFormPicked = this.handleFormPicked.bind(this);
+    this.handleFieldPicked = this.handleFieldPicked.bind(this);
+    this.handleAnnotationsUpdated = this.handleAnnotationsUpdated.bind(this);
 
     this.history = createHistory();
 
     this.state = {
       expanded: false,
       signedIn: false,
-      droneDeployApi: null
+      droneDeployApi: null,
+      annotations: [],
+      selectedForm: null,
+      selectedField: null
     };
 
     /*eslint-disable */
@@ -75,6 +81,7 @@ export default class App extends React.Component {
               redirectTo="/sign-in"
               signedIn={this.state.signedIn}
               droneDeployApi={this.state.droneDeployApi}
+              onAnnotationsUpdated={this.handleAnnotationsUpdated}
               forms={this.state.forms} />
             <PrivateRoute
               path="/form-picker"
@@ -141,13 +148,54 @@ export default class App extends React.Component {
     this.setState({ signedIn: false });
   }
 
+  handleAnnotationsUpdated(annotations) {
+    this.setState({annotations});
+  }
+
   handleFormPicked(form) {
     this.setState({ selectedForm: form });
   }
 
-  handleFieldPicked(field) {
-    console.log('fieldPicked');
-    console.log(field);
+  handleFieldPicked(selectedField) {
+    this.setState({selectedField}, () => {
+      this.syncAnnotations();
+    });
+  }
+
+  syncAnnotation(annotation, callback) {
+    const attributes = {
+      latitude: annotation.geometry.lat,
+      longitude: annotation.geometry.lng,
+      form_values: {}
+    };
+
+    attributes.form_values[this.state.selectedField.key] = annotation.description;
+
+    const record = new Record(attributes, this.state.selectedForm);
+
+    const recordObject = {record: record.toJSON()};
+
+    this.api.records.create(recordObject, callback);
+  }
+
+  syncAnnotations() {
+    const tasks = this.state.annotations.map((annotation) => {
+      return (callback) => {
+        this.syncAnnotation(annotation, callback);
+      };
+    });
+
+    series(tasks, this.onAnnotationsSyncd);
+  }
+
+  onAnnotationsSyncd(error, results) {
+    if (error) {
+      console.log('sync error');
+      return console.log(error);
+    }
+
+    console.log('success');
+    return console.log(results);
   }
 
   TOKEN_KEY = 'fulcrum_token';

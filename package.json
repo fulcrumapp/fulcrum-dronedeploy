@@ -10,6 +10,7 @@
     "start": "webpack-dev-server --devtool eval --progress --hot --content-base app"
   },
   "dependencies": {
+    "async": "^2.3.0",
     "babel-runtime": "6.x",
     "classnames": "^2.2.5",
     "fulcrum-app": "^1.5.0",

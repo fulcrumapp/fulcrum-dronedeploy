@@ -7,7 +7,8 @@ require('./Expanded.css');
 
 export default class Annotations extends React.Component {
   static propTypes = {
-    droneDeployApi: React.PropTypes.object.isRequired
+    droneDeployApi: React.PropTypes.object.isRequired,
+    onAnnotationsUpdated: React.PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -20,6 +21,8 @@ export default class Annotations extends React.Component {
       annotations: [],
       syncClicked: false
     };
+
+    this.checkAnnotations();
   }
 
   render() {
@@ -87,9 +90,9 @@ export default class Annotations extends React.Component {
           return annotation.type === 'marker';
         });
 
-        if (filteredAnnotations && filteredAnnotations.length > 0) {
-          this.setState({ annotations: filteredAnnotations });
-        }
+        this.props.onAnnotationsUpdated(filteredAnnotations);
+
+        this.setState({ annotations: filteredAnnotations });
       })
       .catch((error) => {
         console.log('error: ', error);
