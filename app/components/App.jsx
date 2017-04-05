@@ -114,7 +114,7 @@ export default class App extends React.Component {
               signedIn={this.state.signedIn}
               droneDeployApi={this.state.droneDeployApi}
               forms={this.state.forms} />
-            <Redirect to="/expanded" />
+            <Redirect to="/annotations" />
           </div>
         </div>
       </Router>

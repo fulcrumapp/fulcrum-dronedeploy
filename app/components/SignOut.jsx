@@ -14,7 +14,7 @@ export default class SignOut extends React.Component {
 
   render() {
     return (
-      <Redirect to="/expanded" />
+      <Redirect to="/annotations" />
     );
   }
 }

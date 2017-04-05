@@ -10,7 +10,7 @@ export default class Navigation extends React.Component {
         <hr />
         <div className="row">
           <Link
-            to="/expanded"
+            to="/annotations"
             className="button back">
             ← back
           </Link>

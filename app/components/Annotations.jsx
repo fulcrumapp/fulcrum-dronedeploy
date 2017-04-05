@@ -1,7 +1,5 @@
 import React from 'react';
 
-import Navigation from './Navigation';
-
 require('./Expanded.css');
 
 export default class Annotations extends React.Component {
@@ -55,7 +53,6 @@ export default class Annotations extends React.Component {
         <div className="row">
           {syncButton}
         </div>
-        <Navigation />
       </div>
     );
   }
@@ -65,7 +62,7 @@ export default class Annotations extends React.Component {
   }
 
   handleSyncButtonClicked() {
-    this.props.history.push('/form-picker')
+    this.props.history.push('/form-picker');
   }
 
   checkAnnotations() {

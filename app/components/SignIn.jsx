@@ -31,7 +31,7 @@ export default class SignIn extends React.Component {
   render() {
     if (this.props.signedIn) {
       return (
-        <Redirect to="/expanded" />
+        <Redirect to="/annotations" />
       );
     }
     if (this.state.contexts) {
