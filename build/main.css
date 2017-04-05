@@ -210,10 +210,11 @@ button, a.button {
   /*// Gets rid of tap active state*/
   -webkit-tap-highlight-color: transparent;
   text-align: center;
-  text-decoration:none;
-  letter-spacing:.5px;
-  cursor:pointer;
-  margin-top:1rem;
+  text-decoration: none;
+  letter-spacing: .5px;
+  cursor: pointer;
+  margin-top: 1rem;
+  overflow: hidden;
 }
 /*button.primary {
   background-color: transparent;
