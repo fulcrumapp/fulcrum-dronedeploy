@@ -29,6 +29,7 @@ export default class App extends React.Component {
     this.handleFormPicked = this.handleFormPicked.bind(this);
     this.handleFieldPicked = this.handleFieldPicked.bind(this);
     this.handleAnnotationsUpdated = this.handleAnnotationsUpdated.bind(this);
+    this.onAnnotationsSyncd = this.onAnnotationsSyncd.bind(this);
 
     this.history = createHistory();
 
@@ -191,11 +192,20 @@ export default class App extends React.Component {
   onAnnotationsSyncd(error, results) {
     if (error) {
       console.log('sync error');
-      return console.log(error);
+      console.log(error);
+
+      return this.showMessage('There was an error syncing annotations.');
     }
 
-    console.log('success');
-    return console.log(results);
+    return this.showMessage(results.length + ' annotation(s) syncd.');
+  }
+
+  showMessage(message, timeout = 5000) {
+    if (this.state.droneDeployApi) {
+      return this.state.droneDeployApi.Messaging.showToast(message, {timeout: timeout});
+    }
+
+    return console.log(message);
   }
 
   TOKEN_KEY = 'fulcrum_token';

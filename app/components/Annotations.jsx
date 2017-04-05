@@ -93,9 +93,6 @@ export default class Annotations extends React.Component {
         this.props.onAnnotationsUpdated(filteredAnnotations);
 
         this.setState({ annotations: filteredAnnotations });
-      })
-      .catch((error) => {
-        console.log('error: ', error);
       });
   }
 }
