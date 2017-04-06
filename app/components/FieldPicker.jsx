@@ -32,7 +32,7 @@ export default class FieldPicker extends React.Component {
     return (
       <div>
         <div className="row">
-          <p>Select a field for annotation comments.</p>
+          <p>Select a field to save annotation descriptions. Descriptions can only be saved to text fields.</p>
         </div>
         <div className="row">
           {writableFields.map((field, i) => {

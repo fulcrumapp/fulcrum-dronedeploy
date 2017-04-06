@@ -20,7 +20,7 @@ export default class FormPicker extends React.Component {
     return (
       <div>
         <div className="row">
-          <p>Select a form to import annotations.</p>
+          <p>Select a form to sync annotations.</p>
         </div>
         <div className="row">
           {this.props.forms

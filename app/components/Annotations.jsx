@@ -46,7 +46,7 @@ export default class Annotations extends React.Component {
       <div>
         <div className="row">
           <p>
-            There {count === 1 ? 'is' : 'are'} <strong>{count} annotation{count === 1 ? '' : 's'}</strong> available to push to Fulcrum.
+            There {count === 1 ? 'is' : 'are'} <strong>{count} annotation{count === 1 ? '' : 's'}</strong> to sync to Fulcrum.
           </p>
         </div>
         <div className="row">
@@ -56,7 +56,7 @@ export default class Annotations extends React.Component {
           <Link
             className="button"
             to="/sign-out">
-            Sign Out
+            Sign Out of Fulcrum
           </Link>
         </div>
       </div>

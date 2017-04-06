@@ -23,7 +23,7 @@ export default class Expanded extends React.Component {
             <Link
               className="button"
               to="/sign-out">
-              Sign Out
+              Sign Out of Fulcrum
             </Link>
           </div>
         </div>
