@@ -20,8 +20,11 @@ export default class FieldPicker extends React.Component {
 
     if (writableFields.length === 0) {
       return (
-        <div className="row">
-          <p>There are no text fields to write to in this app.</p>
+        <div>
+          <div className="row">
+            <p>There are no text fields to write to in this app.</p>
+          </div>
+          <Navigation />
         </div>
       );
     }
