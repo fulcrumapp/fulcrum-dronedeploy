@@ -12,7 +12,7 @@ export default class Navigation extends React.Component {
           <Link
             to="/annotations"
             className="button back">
-            ← back
+            &lt; back
           </Link>
         </div>
       </div>
