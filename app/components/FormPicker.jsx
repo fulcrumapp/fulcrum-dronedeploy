@@ -23,14 +23,19 @@ export default class FormPicker extends React.Component {
           <p>Select a form to import annotations.</p>
         </div>
         <div className="row">
-          {this.props.forms.map((form, i) => {
-            return (
-              <button key={i}
-                onClick={() => this.handleFormClicked(form)}>
-                {form.name}
-              </button>
-            );
-          })}
+          {this.props.forms
+            .sort((a, b) => {
+              return a.name > b.name;
+            })
+            .map((form, i) => {
+              return (
+                <button key={i}
+                  onClick={() => this.handleFormClicked(form)}>
+                  {form.name}
+                </button>
+              );
+            })
+          }
         </div>
         <Navigation />
       </div>
