@@ -22,7 +22,12 @@ export default class FieldPicker extends React.Component {
       return (
         <div>
           <div className="row">
-            <p>There are no text fields to write to in this app.</p>
+            <p>There are no text fields to save descriptions in this app. You can sync annotations but no descriptions will be saved.</p>
+            <button
+              key={0}
+              onClick={this.handleFieldClicked}>
+              Sync Annotations
+            </button>
           </div>
           <Navigation />
         </div>
@@ -33,11 +38,18 @@ export default class FieldPicker extends React.Component {
       <div>
         <div className="row">
           <p>Select a field to save annotation descriptions. Descriptions can only be saved to text fields.</p>
+          <p>Select "None" to skip saving any descriptions.</p>
         </div>
         <div className="row">
+          <button
+            key={0}
+            onClick={this.handleFieldClicked}>
+            None
+          </button>
           {writableFields.map((field, i) => {
             return (
-              <button key={i}
+              <button
+                key={i}
                 onClick={() => this.handleFieldClicked(field)}>
                 {field.label}
               </button>

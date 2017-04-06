@@ -39,7 +39,9 @@ export default class AnnotationsSyncer extends React.Component {
       form_values: {}
     };
 
-    attributes.form_values[this.props.selectedField.key] = annotation.description;
+    if (this.props.selectedField) {
+      attributes.form_values[this.props.selectedField.key] = annotation.description;
+    }
 
     const record = new Record(attributes, this.props.selectedForm);
 
