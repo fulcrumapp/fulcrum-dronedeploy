@@ -35,16 +35,26 @@ export default class SignIn extends React.Component {
       );
     }
     if (this.state.contexts) {
+      if (this.state.contexts.length === 1) {
+        return this.handleContextChosen(this.state.contexts[0].id);
+      }
       return (
         <div>
-          {this.state.contexts.map((context) => {
-            return (<Context
-              key={context.id}
-              id={context.id}
-              name={context.name}
-              onContextChosen={this.handleContextChosen} />
-            );
-          })}
+          <div className="row">
+            <p>
+              Select an organization to sign into.
+            </p>
+          </div>
+          <div>
+            {this.state.contexts.map((context) => {
+              return (<Context
+                key={context.id}
+                id={context.id}
+                name={context.name}
+                onContextChosen={this.handleContextChosen} />
+              );
+            })}
+          </div>
         </div>
       );
     }
