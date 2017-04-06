@@ -11,7 +11,6 @@ export default class Annotations extends React.Component {
   constructor(props) {
     super(props);
 
-    this.handleRefreshCountClicked = this.handleRefreshCountClicked.bind(this);
     this.handleSyncButtonClicked = this.handleSyncButtonClicked.bind(this);
 
     this.state = {
@@ -19,15 +18,17 @@ export default class Annotations extends React.Component {
     };
 
     this.checkAnnotations();
+
+    this.checkAnnotationsInterval = setInterval(() => {
+      this.checkAnnotations();
+    }, 4000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.checkAnnotationsInterval);
   }
 
   render() {
-    const refreshCount = (
-      <button onClick={this.handleRefreshCountClicked}>
-        Refresh Count
-      </button>
-    );
-
     const count = this.state.annotations.length;
 
     let syncButton = null;
@@ -48,17 +49,10 @@ export default class Annotations extends React.Component {
           </p>
         </div>
         <div className="row">
-          {refreshCount}
-        </div>
-        <div className="row">
           {syncButton}
         </div>
       </div>
     );
-  }
-
-  handleRefreshCountClicked() {
-    this.checkAnnotations();
   }
 
   handleSyncButtonClicked() {
