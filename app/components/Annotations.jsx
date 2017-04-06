@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 require('./Expanded.css');
 
@@ -50,6 +51,13 @@ export default class Annotations extends React.Component {
         </div>
         <div className="row">
           {syncButton}
+        </div>
+        <div className="row">
+          <Link
+            className="button"
+            to="/sign-out">
+            Sign Out
+          </Link>
         </div>
       </div>
     );
