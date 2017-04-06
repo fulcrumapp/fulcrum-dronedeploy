@@ -21,7 +21,7 @@ export default class Annotations extends React.Component {
 
     this.checkAnnotationsInterval = setInterval(() => {
       this.checkAnnotations();
-    }, 4000);
+    }, 6000);
   }
 
   componentWillUnmount() {
