@@ -89,6 +89,18 @@ export default class SignIn extends React.Component {
             <button type="submit">Sign Into Fulcrum</button>
           </div>
         </div>
+
+        <div className="row">
+          <p className="no-account">
+            Don't have an account?&nbsp;
+            <a
+              target="_blank"
+              href="https://web.fulcrumapp.com/users/sign_up/">
+              Sign up&nbsp;
+            </a>
+            for free.
+          </p>
+        </div>
       </form>
     );
   }
