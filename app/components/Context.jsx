@@ -15,7 +15,7 @@ export default class Context extends React.Component {
 
   render() {
     return (
-      <div className="row button-row">
+      <div className="row">
         <button
           onClick={this.handleClick}
           key={this.props.id}>{this.props.name}</button>
