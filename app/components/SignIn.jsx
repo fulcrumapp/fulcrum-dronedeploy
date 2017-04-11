@@ -115,7 +115,7 @@ export default class SignIn extends React.Component {
     };
 
     request
-      .post(`${server}api/_private/authorizations`)
+      .post(`${server}api/v2/authorizations`)
       .send(data)
       .set('Accept', 'application/json')
       .set('Authorization', this.getAuthHeader())
