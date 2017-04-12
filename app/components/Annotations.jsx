@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-require('./Expanded.css');
-
 export default class Annotations extends React.Component {
   static propTypes = {
     droneDeployApi: React.PropTypes.object.isRequired,

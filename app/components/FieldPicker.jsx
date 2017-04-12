@@ -29,7 +29,7 @@ export default class FieldPicker extends React.Component {
               Sync Annotations
             </button>
           </div>
-          <Navigation />
+          <Navigation backPath="/form-picker" />
         </div>
       );
     }
@@ -56,7 +56,7 @@ export default class FieldPicker extends React.Component {
             );
           })}
         </div>
-        <Navigation />
+        <Navigation backPath="/form-picker" />
       </div>
     );
   }
