@@ -92,7 +92,9 @@ export default class SignIn extends React.Component {
 
         <div className="row">
           <p className="no-account">
-            Don't have an account?&nbsp;
+            Don't have a Fulcrum account?
+          </p>
+          <p className="no-account last">
             <a
               target="_blank"
               href="https://web.fulcrumapp.com/users/sign_up/">

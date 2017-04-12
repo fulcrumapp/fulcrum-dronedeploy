@@ -1,4 +1,12 @@
+form {
+  margin-bottom: 0;
+}
+
 .no-account {
   text-align: center;
   margin: 20px auto 0;
+}
+
+.no-account.last {
+  margin: 5px auto 0;
 }
