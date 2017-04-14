@@ -25,7 +25,15 @@ export default class FormPicker extends React.Component {
         <div className="row">
           {this.props.forms
             .sort((a, b) => {
-              return a.name > b.name;
+              if (a.name > b.name) {
+                return 1;
+              }
+
+              if (b.name > a.name) {
+                return -1;
+              }
+
+              return 0;
             })
             .map((form, i) => {
               return (
