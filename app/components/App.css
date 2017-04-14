@@ -1,3 +1,8 @@
 .hidden {
   display: none;
 }
+
+.expanded {
+  max-height: 360px;
+  overflow: auto;
+}

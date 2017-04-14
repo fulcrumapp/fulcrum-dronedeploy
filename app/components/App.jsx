@@ -16,6 +16,7 @@ import FormPicker from './FormPicker';
 import FieldPicker from './FieldPicker';
 import PropsRoute from './PropsRoute';
 import PrivateRoute from './PrivateRoute';
+import ScrollToTop from './ScrollToTop';
 
 require('./App.css');
 
@@ -55,6 +56,7 @@ export default class App extends React.Component {
 
   render() {
     const expandedClassName = classnames({
+      expanded: true,
       hidden: !this.state.expanded
     });
 
@@ -62,61 +64,63 @@ export default class App extends React.Component {
       <Router
         history={this.history}
         basename={urlRoot}>
-        <div className="container expand-container">
-          <Header
-            expanded={this.state.expanded}
-            onHeaderClick={this.handleHeaderClick} />
-          <div className={expandedClassName}>
-            <PropsRoute
-              path="/sign-in"
-              component={SignIn}
-              onSignedIn={this.handleSignedIn}
-              signedIn={this.state.signedIn} />
-            <PropsRoute
-              path="/sign-out"
-              component={SignOut}
-              onSignedOut={this.handleSignedOut} />
-            <PrivateRoute
-              path="/annotations"
-              component={Annotations}
-              redirectTo="/sign-in"
-              signedIn={this.state.signedIn}
-              droneDeployApi={this.state.droneDeployApi}
-              onAnnotationsUpdated={this.handleAnnotationsUpdated}
-              forms={this.state.forms} />
-            <PrivateRoute
-              path="/form-picker"
-              component={FormPicker}
-              redirectTo="/sign-in"
-              signedIn={this.state.signedIn}
-              forms={this.state.forms}
-              onFormPicked={this.handleFormPicked} />
-            <PrivateRoute
-              path="/field-picker"
-              component={FieldPicker}
-              redirectTo="/sign-in"
-              signedIn={this.state.signedIn}
-              selectedForm={this.state.selectedForm}
-              onFieldPicked={this.handleFieldPicked} />
-            <PrivateRoute
-              path="/annotations-syncer"
-              component={AnnotationsSyncer}
-              redirectTo="/sign-in"
-              signedIn={this.state.signedIn}
-              annotations={this.state.annotations}
-              selectedForm={this.state.selectedForm}
-              selectedField={this.state.selectedField}
-              fulcrumAPI={this.api}
-              onAnnotationsSyncd={this.handleAnnotationsSyncd} />
-            <PropsRoute
-              path="/expanded"
-              component={Expanded}
-              signedIn={this.state.signedIn}
-              droneDeployApi={this.state.droneDeployApi}
-              forms={this.state.forms} />
-            <Redirect to="/annotations" />
+        <ScrollToTop>
+          <div className="container expand-container">
+            <Header
+              expanded={this.state.expanded}
+              onHeaderClick={this.handleHeaderClick} />
+            <div className={expandedClassName}>
+              <PropsRoute
+                path="/sign-in"
+                component={SignIn}
+                onSignedIn={this.handleSignedIn}
+                signedIn={this.state.signedIn} />
+              <PropsRoute
+                path="/sign-out"
+                component={SignOut}
+                onSignedOut={this.handleSignedOut} />
+              <PrivateRoute
+                path="/annotations"
+                component={Annotations}
+                redirectTo="/sign-in"
+                signedIn={this.state.signedIn}
+                droneDeployApi={this.state.droneDeployApi}
+                onAnnotationsUpdated={this.handleAnnotationsUpdated}
+                forms={this.state.forms} />
+              <PrivateRoute
+                path="/form-picker"
+                component={FormPicker}
+                redirectTo="/sign-in"
+                signedIn={this.state.signedIn}
+                forms={this.state.forms}
+                onFormPicked={this.handleFormPicked} />
+              <PrivateRoute
+                path="/field-picker"
+                component={FieldPicker}
+                redirectTo="/sign-in"
+                signedIn={this.state.signedIn}
+                selectedForm={this.state.selectedForm}
+                onFieldPicked={this.handleFieldPicked} />
+              <PrivateRoute
+                path="/annotations-syncer"
+                component={AnnotationsSyncer}
+                redirectTo="/sign-in"
+                signedIn={this.state.signedIn}
+                annotations={this.state.annotations}
+                selectedForm={this.state.selectedForm}
+                selectedField={this.state.selectedField}
+                fulcrumAPI={this.api}
+                onAnnotationsSyncd={this.handleAnnotationsSyncd} />
+              <PropsRoute
+                path="/expanded"
+                component={Expanded}
+                signedIn={this.state.signedIn}
+                droneDeployApi={this.state.droneDeployApi}
+                forms={this.state.forms} />
+              <Redirect to="/annotations" />
+            </div>
           </div>
-        </div>
+        </ScrollToTop>
       </Router>
     );
   }
