@@ -158,6 +158,7 @@ export default class App extends React.Component {
     window.sessionStorage.setItem(this.TOKEN_KEY, token);
     this.setState({ signedIn: true });
     this.checkSignedInState();
+    this.state.droneDeployApi.Track.successCondition();
   }
 
   handleSignedOut() {
