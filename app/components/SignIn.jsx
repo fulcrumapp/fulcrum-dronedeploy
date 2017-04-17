@@ -99,9 +99,8 @@ export default class SignIn extends React.Component {
             <a
               target="_blank"
               href="https://web.fulcrumapp.com/users/sign_up/">
-              Sign up&nbsp;
-            </a>
-            for free.
+              Sign up
+            </a> for free.
           </p>
         </div>
       </form>
