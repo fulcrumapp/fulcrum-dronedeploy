@@ -31,6 +31,7 @@ export default class App extends React.Component {
     this.handleFieldPicked = this.handleFieldPicked.bind(this);
     this.handleAnnotationsUpdated = this.handleAnnotationsUpdated.bind(this);
     this.handleAnnotationsSyncd = this.handleAnnotationsSyncd.bind(this);
+    this.showMessage = this.showMessage.bind(this);
 
     this.history = createHistory();
 
@@ -74,7 +75,8 @@ export default class App extends React.Component {
                 path="/sign-in"
                 component={SignIn}
                 onSignedIn={this.handleSignedIn}
-                signedIn={this.state.signedIn} />
+                signedIn={this.state.signedIn}
+                showMessage={this.showMessage} />
               <PropsRoute
                 path="/sign-out"
                 component={SignOut}

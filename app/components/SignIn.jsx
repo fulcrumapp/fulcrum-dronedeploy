@@ -10,7 +10,8 @@ require('./SignIn.css');
 export default class SignIn extends React.Component {
   static propTypes = {
     onSignedIn: React.PropTypes.func.isRequired,
-    signedIn: React.PropTypes.bool.isRequired
+    signedIn: React.PropTypes.bool.isRequired,
+    showMessage: React.PropTypes.func.isRequired
   }
 
   constructor() {
@@ -123,9 +124,7 @@ export default class SignIn extends React.Component {
       .set('Authorization', this.getAuthHeader())
       .end((error, resp) => {
         if (error) {
-          /*eslint-disable */
-          window.alert('There was a problem signing in.');
-          /*eslint-enable */
+          this.props.showMessage('There was a problem signing in.');
         } else {
           this.props.onSignedIn(resp.body.authorization.token);
           this.render();
@@ -144,9 +143,7 @@ export default class SignIn extends React.Component {
         .set('Authorization', this.getAuthHeader())
         .end((error, resp) => {
           if (error) {
-            /*eslint-disable */
-            window.alert('There was a problem signing in.');
-            /*eslint-enable */
+            this.props.showMessage('There was a problem signing in.');
           } else {
             this.setState({ contexts: resp.body.user.contexts });
           }
