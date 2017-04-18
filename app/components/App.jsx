@@ -5,7 +5,7 @@ import Fulcrum from 'fulcrum-app';
 import { Form } from 'fulcrum-core';
 import classnames from 'classnames';
 
-import { server, urlRoot } from '../constants';
+import { server, urlRoot, tokenKey } from '../constants';
 import Header from './Header';
 import Expanded from './Expanded';
 import SignIn from './SignIn';
@@ -53,6 +53,14 @@ export default class App extends React.Component {
     /*eslint-enable */
 
     this.checkSignedInState();
+  }
+
+  componentDidUpdate() {
+    if (this.state.expanded) {
+      window.frameElement.style.height = '360px';
+    } else {
+      window.frameElement.style.height = '60px';
+    }
   }
 
   render() {
@@ -127,16 +135,8 @@ export default class App extends React.Component {
     );
   }
 
-  componentDidUpdate() {
-    if (this.state.expanded) {
-      window.frameElement.style.height = '360px';
-    } else {
-      window.frameElement.style.height = '60px';
-    }
-  }
-
   checkSignedInState() {
-    const token = window.sessionStorage.getItem(this.TOKEN_KEY);
+    const token = window.sessionStorage.getItem(tokenKey);
 
     if (token) {
       this.api = new Fulcrum({
@@ -163,14 +163,14 @@ export default class App extends React.Component {
   }
 
   handleSignedIn(token) {
-    window.sessionStorage.setItem(this.TOKEN_KEY, token);
+    window.sessionStorage.setItem(tokenKey, token);
     this.setState({ signedIn: true });
     this.checkSignedInState();
     this.state.droneDeployApi.Track.successCondition();
   }
 
   handleSignedOut() {
-    window.sessionStorage.removeItem(this.TOKEN_KEY);
+    window.sessionStorage.removeItem(tokenKey);
     this.setState({ signedIn: false });
   }
 
@@ -204,6 +204,4 @@ export default class App extends React.Component {
 
     return console.log(message);
   }
-
-  TOKEN_KEY = 'fulcrum_token';
 }
