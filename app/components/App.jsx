@@ -127,6 +127,14 @@ export default class App extends React.Component {
     );
   }
 
+  componentDidUpdate() {
+    if (this.state.expanded) {
+      window.frameElement.style.height = '360px';
+    } else {
+      window.frameElement.style.height = '60px';
+    }
+  }
+
   checkSignedInState() {
     const token = window.sessionStorage.getItem(this.TOKEN_KEY);
 
