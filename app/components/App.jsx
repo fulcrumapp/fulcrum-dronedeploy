@@ -56,11 +56,7 @@ export default class App extends React.Component {
   }
 
   componentDidUpdate() {
-    if (this.state.expanded) {
-      window.frameElement.style.height = '360px';
-    } else {
-      window.frameElement.style.height = '60px';
-    }
+    document.body.style.height = (this.state.expanded ? '360px' : '60px');
   }
 
   render() {
