@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 export default class Annotations extends React.Component {
   static propTypes = {
@@ -12,18 +13,28 @@ export default class Annotations extends React.Component {
 
     this.handleRefreshCountClicked = this.handleRefreshCountClicked.bind(this);
     this.handleSyncButtonClicked = this.handleSyncButtonClicked.bind(this);
+    this.handleLayerNameChange = this.handleLayerNameChange.bind(this);
+    this.handleAddLayerButtonClicked = this.handleAddLayerButtonClicked.bind(this);
 
     this.state = {
-      annotations: []
+      annotations: [],
+      layerName: null,
+      tileLayerUrl: null
     };
 
     this.checkAnnotations();
+    this.checkTileLayers();
   }
 
   render() {
     const count = this.state.annotations.length;
 
     let syncButton = null;
+    let syncText = (
+      <p>
+        There are no annotations to sync to Fulcrum.
+      </p>
+    );
 
     if (count > 0) {
       syncButton = (
@@ -31,26 +42,88 @@ export default class Annotations extends React.Component {
           Sync Annotations
         </button>
       );
+
+      syncText = (
+        <p>
+          There {count === 1 ? 'is' : 'are'} <strong>{count} annotation{count === 1 ? '' : 's'}</strong> to sync to Fulcrum.
+        </p>
+      );
+    }
+
+    let addLayerButton = null;
+    let addLayerInput = null;
+    let addLayerText = (
+      <p>
+        There are no tile layers to add to Fulcrum.
+      </p>
+    );
+
+    if (this.state.tileLayerUrl) {
+      addLayerButton = (
+        <button onClick={this.handleAddLayerButtonClicked}>
+          Add Layer to Fulcrum
+        </button>
+      );
+
+      addLayerText = (
+        <div>
+          <p>
+            Type a layer name below and click "Add Layer" below to add this drone imagery to Fulcrum.
+          </p>
+          <p>
+            <strong>NOTE:</strong> Currently, layers added to Fulcrum expire after 30 days.
+          </p>
+        </div>
+      );
+
+      addLayerInput = (
+        <div className="input-field col-4">
+          <input
+            onChange={this.handleLayerNameChange}
+            type="text" />
+          <label htmlFor="layer-name">Layer Name</label>
+        </div>
+      );
     }
 
     return (
       <div>
         <div className="row">
-          <p>
-            There {count === 1 ? 'is' : 'are'} <strong>{count} annotation{count === 1 ? '' : 's'}</strong> to sync to Fulcrum.
-          </p>
-        </div>
-        <div className="row">
-          <button onClick={this.handleRefreshCountClicked}>
-            Refresh Count
-          </button>
-        </div>
-        <div className="row">
-          {syncButton}
+          <Tabs className="tabs">
+            <TabList className="tab-list">
+              <Tab className="tab">Annotations</Tab>
+              <Tab className="tab">Tile Layers</Tab>
+            </TabList>
+
+            <TabPanel className="tab-panel">
+              <div className="row">
+                {syncText}
+              </div>
+              <div className="row">
+                <button onClick={this.handleRefreshCountClicked}>
+                  Refresh Count
+                </button>
+              </div>
+              <div className="row">
+                {syncButton}
+              </div>
+            </TabPanel>
+            <TabPanel className="tab-panel">
+              <div className="row">
+                {addLayerText}
+              </div>
+              <div className="row">
+                {addLayerInput}
+              </div>
+              <div className="row">
+                {addLayerButton}
+              </div>
+            </TabPanel>
+          </Tabs>
         </div>
         <div className="row">
           <Link
-            className="button"
+            className="sign-out"
             to="/sign-out">
             Sign Out of Fulcrum
           </Link>
@@ -59,12 +132,36 @@ export default class Annotations extends React.Component {
     );
   }
 
+  handleLayerNameChange(event) {
+    this.setState({ layerName: event.target.value.trim() });
+  }
+
   handleRefreshCountClicked() {
     this.checkAnnotations();
   }
 
   handleSyncButtonClicked() {
     this.props.history.push('/form-picker');
+  }
+
+  handleAddLayerButtonClicked() {
+    console.log('Gonna add: ', this.state.layerName, this.state.tileLayerUrl);
+  }
+
+  checkTileLayers() {
+    if (!this.props.droneDeployApi) {
+      return;
+    }
+
+    this.props.droneDeployApi.Plans.getCurrentlyViewed()
+      .then((plan) => {
+        this.props.droneDeployApi.Tiles.get({planId: plan.id, layerName: 'ortho', zoom: 17})
+          .then((tileInformation) => {
+            if (tileInformation.template) {
+              this.setState({tileLayerUrl: tileInformation.template});
+            }
+          });
+      });
   }
 
   checkAnnotations() {

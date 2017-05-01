@@ -21,7 +21,7 @@ export default class Expanded extends React.Component {
           </div>
           <div className="row">
             <Link
-              className="button"
+              className="sign-out"
               to="/sign-out">
               Sign Out of Fulcrum
             </Link>
