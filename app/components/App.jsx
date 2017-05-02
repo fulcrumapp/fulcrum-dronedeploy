@@ -86,15 +86,6 @@ export default class App extends React.Component {
                 component={SignOut}
                 onSignedOut={this.handleSignedOut} />
               <PrivateRoute
-                path="/annotations"
-                component={Annotations}
-                redirectTo="/sign-in"
-                signedIn={this.state.signedIn}
-                droneDeployApi={this.state.droneDeployApi}
-                onAnnotationsUpdated={this.handleAnnotationsUpdated}
-                forms={this.state.forms}
-                fulcrumAPI={this.api} />
-              <PrivateRoute
                 path="/form-picker"
                 component={FormPicker}
                 redirectTo="/sign-in"
@@ -123,8 +114,10 @@ export default class App extends React.Component {
                 component={Expanded}
                 signedIn={this.state.signedIn}
                 droneDeployApi={this.state.droneDeployApi}
-                forms={this.state.forms} />
-              <Redirect to="/annotations" />
+                onAnnotationsUpdated={this.handleAnnotationsUpdated}
+                forms={this.state.forms}
+                fulcrumAPI={this.api} />
+              <Redirect to="/expanded" />
             </div>
           </div>
         </ScrollToTop>
