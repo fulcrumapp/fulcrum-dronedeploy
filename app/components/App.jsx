@@ -10,7 +10,6 @@ import Header from './Header';
 import Expanded from './Expanded';
 import SignIn from './SignIn';
 import SignOut from './SignOut';
-import Annotations from './Annotations';
 import AnnotationsSyncer from './AnnotationsSyncer';
 import FormPicker from './FormPicker';
 import FieldPicker from './FieldPicker';
@@ -33,7 +32,9 @@ export default class App extends React.Component {
     this.handleAnnotationsSyncd = this.handleAnnotationsSyncd.bind(this);
     this.showMessage = this.showMessage.bind(this);
 
-    this.history = createHistory();
+    this.history = createHistory({
+      basename: urlRoot
+    });
 
     this.state = {
       expanded: false,
@@ -112,11 +113,13 @@ export default class App extends React.Component {
               <PropsRoute
                 path="/expanded"
                 component={Expanded}
+                redirectTo="/sign-in"
                 signedIn={this.state.signedIn}
                 droneDeployApi={this.state.droneDeployApi}
                 onAnnotationsUpdated={this.handleAnnotationsUpdated}
                 forms={this.state.forms}
-                fulcrumAPI={this.api} />
+                fulcrumAPI={this.api}
+                history={this.history} />
               <Redirect to="/expanded" />
             </div>
           </div>

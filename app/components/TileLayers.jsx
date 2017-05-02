@@ -1,7 +1,11 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 
-export default class TileLayers extends React.Component {
+class TileLayers extends React.Component {
   static propTypes = {
+    match: React.PropTypes.object.isRequired,
+    location: React.PropTypes.object.isRequired,
+    history: React.PropTypes.object.isRequired,
     droneDeployApi: React.PropTypes.object.isRequired,
     fulcrumAPI: React.PropTypes.object.isRequired
   }
@@ -24,53 +28,37 @@ export default class TileLayers extends React.Component {
   }
 
   render() {
-    let addLayerButton = null;
-    let addLayerInput = null;
-    let addLayerText = (
-      <p>
-        There are no tile layers to add to Fulcrum.
-      </p>
-    );
-
     if (this.state.tileLayerUrl) {
-      addLayerButton = (
-        <button onClick={this.handleAddLayerButtonClicked}>
-          Add Layer to Fulcrum
-        </button>
-      );
-
-      addLayerText = (
+      return (
         <div>
-          <p>
-            Type a layer name below and click <strong>Add Layer</strong> below to add this drone imagery to Fulcrum.
-          </p>
-          <p>
-            <strong>NOTE:</strong> Currently, layers added to Fulcrum expire after 30 days.
-          </p>
-        </div>
-      );
-
-      addLayerInput = (
-        <div className="input-field col-4">
-          <input
-            onChange={this.handleLayerNameChange}
-            type="text" />
-          <label htmlFor="layer-name">Layer Name</label>
+          <div className="row">
+            <p>
+              Type a layer name below and click <strong>Add Layer</strong> below to add this drone imagery to Fulcrum.
+            </p>
+            <p>
+              <strong>NOTE:</strong> Currently, layers added to Fulcrum expire after 30 days.
+            </p>
+          </div>
+          <div className="row">
+            <div className="input-field col-4">
+              <input
+                onChange={this.handleLayerNameChange}
+                type="text" />
+              <label htmlFor="layer-name">Layer Name</label>
+            </div>
+          </div>
+          <div className="row">
+            <button onClick={this.handleAddLayerButtonClicked}>
+              Add Layer to Fulcrum
+            </button>
+          </div>
         </div>
       );
     }
 
     return (
-      <div>
-        <div className="row">
-          {addLayerText}
-        </div>
-        <div className="row">
-          {addLayerInput}
-        </div>
-        <div className="row">
-          {addLayerButton}
-        </div>
+      <div className="row">
+        <p>There are no tile layers to add to Fulcrum.</p>
       </div>
     );
   }
@@ -127,3 +115,5 @@ export default class TileLayers extends React.Component {
       });
   }
 }
+
+export default withRouter(TileLayers);

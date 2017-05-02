@@ -1,7 +1,11 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 
-export default class Annotations extends React.Component {
+class Annotations extends React.Component {
   static propTypes = {
+    match: React.PropTypes.object.isRequired,
+    location: React.PropTypes.object.isRequired,
+    history: React.PropTypes.object.isRequired,
     droneDeployApi: React.PropTypes.object.isRequired,
     onAnnotationsUpdated: React.PropTypes.func.isRequired
   }
@@ -88,3 +92,5 @@ export default class Annotations extends React.Component {
       });
   }
 }
+
+export default withRouter(Annotations);
