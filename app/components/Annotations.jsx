@@ -5,6 +5,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 export default class Annotations extends React.Component {
   static propTypes = {
     droneDeployApi: React.PropTypes.object.isRequired,
+    fulcrumAPI: React.PropTypes.object.isRequired,
     onAnnotationsUpdated: React.PropTypes.func.isRequired
   }
 
@@ -18,12 +19,15 @@ export default class Annotations extends React.Component {
 
     this.state = {
       annotations: [],
+      fulcrumLayers: null,
+      layer: null,
       layerName: null,
       tileLayerUrl: null
     };
 
+    this.checkDroneDeployTileLayers();
     this.checkAnnotations();
-    this.checkTileLayers();
+    this.checkFulcrumTileLayers();
   }
 
   render() {
@@ -145,10 +149,38 @@ export default class Annotations extends React.Component {
   }
 
   handleAddLayerButtonClicked() {
-    console.log('Gonna add: ', this.state.layerName, this.state.tileLayerUrl);
+    const layerObj = {
+      layer: {
+        name: this.state.layerName,
+        source: this.state.tileLayerUrl,
+        type: 'xyz'
+      }
+    };
+
+    this.props.fulcrumAPI.layers.create(layerObj, (error, resp) => {
+      if (error) {
+        return console.log('Error creating layer: ', error);
+      }
+
+      return console.log('Layer created: ', resp.layer);
+    });
   }
 
-  checkTileLayers() {
+  checkFulcrumTileLayers() {
+    this.props.fulcrumAPI.layers.search({type: 'xyz'}, (error, resp) => {
+      if (error) {
+        return console.log('Error searching layers: ', error);
+      }
+
+      const filteredLayers = resp.layers.filter((layer) => {
+        return layer.type === 'xyz';
+      });
+
+      this.setState({fulcrumLayers: filteredLayers});
+    });
+  }
+
+  checkDroneDeployTileLayers() {
     if (!this.props.droneDeployApi) {
       return;
     }

@@ -92,7 +92,8 @@ export default class App extends React.Component {
                 signedIn={this.state.signedIn}
                 droneDeployApi={this.state.droneDeployApi}
                 onAnnotationsUpdated={this.handleAnnotationsUpdated}
-                forms={this.state.forms} />
+                forms={this.state.forms}
+                fulcrumAPI={this.api} />
               <PrivateRoute
                 path="/form-picker"
                 component={FormPicker}
