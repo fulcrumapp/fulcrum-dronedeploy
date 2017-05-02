@@ -110,7 +110,7 @@ export default class App extends React.Component {
                 selectedField={this.state.selectedField}
                 fulcrumAPI={this.api}
                 onAnnotationsSyncd={this.handleAnnotationsSyncd} />
-              <PropsRoute
+              <PrivateRoute
                 path="/expanded"
                 component={Expanded}
                 redirectTo="/sign-in"
