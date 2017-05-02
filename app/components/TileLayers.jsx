@@ -29,6 +29,16 @@ class TileLayers extends React.Component {
 
   render() {
     if (this.state.tileLayerUrl) {
+      if (this.state.layer) {
+        const layerHref = `https://web.fulcrumapp.com/layers/${this.state.layer.id}`;
+
+        return (
+          <div className="row">
+            <p>Tile layer saved in Fulcrum: <a href={layerHref}>{this.state.layer.name}</a></p>
+          </div>
+        );
+      }
+
       return (
         <div>
           <div className="row">
@@ -78,10 +88,13 @@ class TileLayers extends React.Component {
 
     this.props.fulcrumAPI.layers.create(layerObj, (error, resp) => {
       if (error) {
-        return console.log('Error creating layer: ', error);
+        console.log('Error creating layer: ', error);
+        return this.showMessage('There was an error creating the tile layer.');
       }
 
-      return console.log('Layer created: ', resp.layer);
+      this.setState({layer: resp.layer});
+
+      return this.showMessage(`Successfully created Fulcrum tile layer: ${resp.layer.name}`);
     });
   }
 
@@ -113,6 +126,14 @@ class TileLayers extends React.Component {
             }
           });
       });
+  }
+
+  showMessage(message, timeout = 5000) {
+    if (this.props.droneDeployApi) {
+      return this.props.droneDeployApi.Messaging.showToast(message, {timeout: timeout});
+    }
+
+    return console.log(message);
   }
 }
 
