@@ -14,7 +14,7 @@ class TileLayers extends React.Component {
     super(props);
 
     this.handleLayerNameChange = this.handleLayerNameChange.bind(this);
-    this.handleAddLayerButtonClicked = this.handleAddLayerButtonClicked.bind(this);
+    this.handleFormSubmit = this.handleFormSubmit.bind(this);
 
     this.state = {
       layer: null,
@@ -47,19 +47,19 @@ class TileLayers extends React.Component {
               <strong>NOTE:</strong> Currently, layers added to Fulcrum expire after 30 days.
             </p>
           </div>
-          <div className="row">
-            <div className="input-field col-4">
-              <input
-                onChange={this.handleLayerNameChange}
-                type="text" />
-              <label htmlFor="layer-name">Layer Name</label>
+          <form onSubmit={this.handleFormSubmit}>
+            <div className="row">
+              <div className="input-field col-4">
+                <input
+                  onChange={this.handleLayerNameChange}
+                  type="text" />
+                <label htmlFor="layer-name">Layer Name</label>
+              </div>
             </div>
-          </div>
-          <div className="row">
-            <button onClick={this.handleAddLayerButtonClicked}>
-              Add Layer to Fulcrum
-            </button>
-          </div>
+            <div className="row">
+              <button type="submit">Add Layer to Fulcrum</button>
+            </div>
+          </form>
         </div>
       );
     }
@@ -75,7 +75,9 @@ class TileLayers extends React.Component {
     this.setState({ layerName: event.target.value.trim() });
   }
 
-  handleAddLayerButtonClicked() {
+  handleFormSubmit(event) {
+    event.preventDefault();
+
     const layerObj = {
       layer: {
         name: this.state.layerName,
