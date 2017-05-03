@@ -44,7 +44,7 @@ class TileLayers extends React.Component {
               Type a layer name below and click <strong>Add Layer</strong> below to add this drone imagery to Fulcrum.
             </p>
             <p>
-              <strong>NOTE:</strong> Currently, layers added to Fulcrum expire after 30 days.
+              <strong>NOTE:</strong> DroneDeploy tile layers expire after 30 days.
             </p>
           </div>
           <form onSubmit={this.handleFormSubmit}>
