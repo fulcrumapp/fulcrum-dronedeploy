@@ -17,14 +17,12 @@ class TileLayers extends React.Component {
     this.handleAddLayerButtonClicked = this.handleAddLayerButtonClicked.bind(this);
 
     this.state = {
-      fulcrumLayers: null,
       layer: null,
       layerName: null,
       tileLayerUrl: null
     };
 
     this.checkDroneDeployTileLayers();
-    this.checkFulcrumTileLayers();
   }
 
   render() {
@@ -95,20 +93,6 @@ class TileLayers extends React.Component {
       this.setState({layer: resp.layer});
 
       return this.showMessage(`Successfully created Fulcrum tile layer: ${resp.layer.name}`);
-    });
-  }
-
-  checkFulcrumTileLayers() {
-    this.props.fulcrumAPI.layers.search({type: 'xyz'}, (error, resp) => {
-      if (error) {
-        return console.log('Error searching layers: ', error);
-      }
-
-      const filteredLayers = resp.layers.filter((layer) => {
-        return layer.type === 'xyz';
-      });
-
-      return this.setState({fulcrumLayers: filteredLayers});
     });
   }
 
