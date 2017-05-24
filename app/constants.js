@@ -1,5 +1,4 @@
-//export const server = 'https://api.fulcrumapp.com/';
-export const server = 'https://c13dc5da.ngrok.io/';
+export const server = 'https://api.fulcrumapp.com/';
 
 const lastSlashIndex = window.location.pathname.lastIndexOf('/');
 

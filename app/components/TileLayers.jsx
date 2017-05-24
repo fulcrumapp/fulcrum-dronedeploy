@@ -32,7 +32,14 @@ class TileLayers extends React.Component {
 
         return (
           <div className="row">
-            <p>Tile layer saved in Fulcrum: <a href={layerHref}>{this.state.layer.name}</a></p>
+            <p>
+              Tile layer saved in Fulcrum:&nbsp;
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href={layerHref}>{this.state.layer.name}
+              </a>
+            </p>
           </div>
         );
       }
@@ -78,9 +85,12 @@ class TileLayers extends React.Component {
   handleFormSubmit(event) {
     event.preventDefault();
 
+    const date = new Date();
+
     const layerObj = {
       layer: {
         name: this.state.layerName,
+        description: `Created from DroneDeploy on ${date}`,
         source: this.state.tileLayerUrl,
         type: 'xyz'
       }
