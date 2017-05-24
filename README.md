@@ -3,7 +3,7 @@
 ## Hacking
 
 ```bash
-cd /path/to/fulcrum-drone-deploy
+cd /path/to/fulcrum-dronedeploy
 npm install
 npm start
 ```

@@ -429,3 +429,8 @@ input:disabled + label {
 .file-field input[type=text] {
   height: 1.9rem;
 }
+
+a.sign-out {
+  margin: 20px auto 0;
+  font-size: 0.8em;
+}

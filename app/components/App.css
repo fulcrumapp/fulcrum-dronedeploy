@@ -6,3 +6,28 @@
   max-height: 300px;
   overflow: auto;
 }
+
+.tabs {
+  margin-top: 15px;
+}
+
+.tab [role=tab][aria-selected=true] {
+  border-radius: 3px 3px 0 0 !important;
+}
+
+.tab-list {
+  margin-bottom: 0 !important;
+}
+
+.tab-panel {
+  background-color: #ffffff;
+  border: 1px solid transparent;
+  border-color: #aaaaaa;
+  border-top: none;
+  border-radius: 0 0 3px 3px;
+  padding-bottom: 15px;
+}
+
+.tab-panel p {
+  margin-bottom: 0;
+}

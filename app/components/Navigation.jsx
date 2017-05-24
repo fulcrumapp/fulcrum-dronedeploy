@@ -9,7 +9,7 @@ export default class Navigation extends React.Component {
   }
 
   render() {
-    const backPath = this.props.backPath || '/annotations';
+    const backPath = this.props.backPath || '/expanded';
 
     return (
       <div className="navigation">

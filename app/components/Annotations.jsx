@@ -1,8 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router';
 
-export default class Annotations extends React.Component {
+class Annotations extends React.Component {
   static propTypes = {
+    match: React.PropTypes.object.isRequired,
+    location: React.PropTypes.object.isRequired,
+    history: React.PropTypes.object.isRequired,
     droneDeployApi: React.PropTypes.object.isRequired,
     onAnnotationsUpdated: React.PropTypes.func.isRequired
   }
@@ -24,6 +27,11 @@ export default class Annotations extends React.Component {
     const count = this.state.annotations.length;
 
     let syncButton = null;
+    let syncText = (
+      <p>
+        There are no annotations to sync to Fulcrum.
+      </p>
+    );
 
     if (count > 0) {
       syncButton = (
@@ -31,14 +39,18 @@ export default class Annotations extends React.Component {
           Sync Annotations
         </button>
       );
+
+      syncText = (
+        <p>
+          There {count === 1 ? 'is' : 'are'} <strong>{count} annotation{count === 1 ? '' : 's'}</strong> to sync to Fulcrum.
+        </p>
+      );
     }
 
     return (
       <div>
         <div className="row">
-          <p>
-            There {count === 1 ? 'is' : 'are'} <strong>{count} annotation{count === 1 ? '' : 's'}</strong> to sync to Fulcrum.
-          </p>
+          {syncText}
         </div>
         <div className="row">
           <button onClick={this.handleRefreshCountClicked}>
@@ -47,13 +59,6 @@ export default class Annotations extends React.Component {
         </div>
         <div className="row">
           {syncButton}
-        </div>
-        <div className="row">
-          <Link
-            className="button"
-            to="/sign-out">
-            Sign Out of Fulcrum
-          </Link>
         </div>
       </div>
     );
@@ -87,3 +92,5 @@ export default class Annotations extends React.Component {
       });
   }
 }
+
+export default withRouter(Annotations);

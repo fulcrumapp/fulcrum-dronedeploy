@@ -10,7 +10,6 @@ import Header from './Header';
 import Expanded from './Expanded';
 import SignIn from './SignIn';
 import SignOut from './SignOut';
-import Annotations from './Annotations';
 import AnnotationsSyncer from './AnnotationsSyncer';
 import FormPicker from './FormPicker';
 import FieldPicker from './FieldPicker';
@@ -33,7 +32,9 @@ export default class App extends React.Component {
     this.handleAnnotationsSyncd = this.handleAnnotationsSyncd.bind(this);
     this.showMessage = this.showMessage.bind(this);
 
-    this.history = createHistory();
+    this.history = createHistory({
+      basename: urlRoot
+    });
 
     this.state = {
       expanded: false,
@@ -86,14 +87,6 @@ export default class App extends React.Component {
                 component={SignOut}
                 onSignedOut={this.handleSignedOut} />
               <PrivateRoute
-                path="/annotations"
-                component={Annotations}
-                redirectTo="/sign-in"
-                signedIn={this.state.signedIn}
-                droneDeployApi={this.state.droneDeployApi}
-                onAnnotationsUpdated={this.handleAnnotationsUpdated}
-                forms={this.state.forms} />
-              <PrivateRoute
                 path="/form-picker"
                 component={FormPicker}
                 redirectTo="/sign-in"
@@ -117,13 +110,17 @@ export default class App extends React.Component {
                 selectedField={this.state.selectedField}
                 fulcrumAPI={this.api}
                 onAnnotationsSyncd={this.handleAnnotationsSyncd} />
-              <PropsRoute
+              <PrivateRoute
                 path="/expanded"
                 component={Expanded}
+                redirectTo="/sign-in"
                 signedIn={this.state.signedIn}
                 droneDeployApi={this.state.droneDeployApi}
-                forms={this.state.forms} />
-              <Redirect to="/annotations" />
+                onAnnotationsUpdated={this.handleAnnotationsUpdated}
+                forms={this.state.forms}
+                fulcrumAPI={this.api}
+                history={this.history} />
+              <Redirect to="/expanded" />
             </div>
           </div>
         </ScrollToTop>
