@@ -5,7 +5,7 @@
 ### Description
 
 ```
-Turn your map annotations into tasks for field service follow up using the Fulcrum field data collection platform.
+Turn your map annotations (only points for now) into tasks for field service follow up using the Fulcrum field data collection platform. You can also import DroneDeploy Tiles into Fulcrum as Tile XYZ layers.
 ```
 
 ### Additional Information
