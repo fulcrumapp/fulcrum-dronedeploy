@@ -33,7 +33,7 @@ class TileLayers extends React.Component {
         return (
           <div className="row">
             <p>
-              Tile layer saved in Fulcrum:&nbsp;
+              Tile layer saved in Fulcrum: &nbsp;
               <a
                 target="_blank"
                 rel="noopener noreferrer"
