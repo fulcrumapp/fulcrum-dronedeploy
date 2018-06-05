@@ -35,10 +35,16 @@ export default class SignIn extends React.Component {
         <Redirect to="/expanded" />
       );
     }
-    if (this.state.contexts) {
+
+    if (this.state.contexts !== null) {
+      if (this.state.contexts.length === 0) {
+        return this.props.showMessage('API access is not enabled for your Fulcrum account.');
+      }
+
       if (this.state.contexts.length === 1) {
         return this.handleContextChosen(this.state.contexts[0].id);
       }
+
       return (
         <div>
           <div className="row">
@@ -59,6 +65,7 @@ export default class SignIn extends React.Component {
         </div>
       );
     }
+
     return (
       <form onSubmit={this.handleFormSubmit}>
         <div className="row">
@@ -132,8 +139,7 @@ export default class SignIn extends React.Component {
   }
 
   handleFormSubmit(event) {
-    const email = this.state.email;
-    const password = this.state.password;
+    const { email, password } = this.state;
 
     if (email.length > 0 && password.length > 0) {
       request
@@ -144,7 +150,8 @@ export default class SignIn extends React.Component {
           if (error) {
             this.props.showMessage('There was a problem signing in.');
           } else {
-            this.setState({ contexts: resp.body.user.contexts });
+            const contexts = resp.body.user.contexts.filter(context => context.role.can_manage_authorizations);
+            this.setState({ contexts });
           }
         });
     }
@@ -161,8 +168,7 @@ export default class SignIn extends React.Component {
   }
 
   getAuthHeader() {
-    const email = this.state.email;
-    const password = this.state.password;
+    const { email, password } = this.state;
     const auth = window.btoa(`${email}:${password}`);
 
     return `Basic ${auth}`;
